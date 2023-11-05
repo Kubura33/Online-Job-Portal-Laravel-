@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.my-label{
+    @apply font-medium text-lg text-indigo-600
+}
+.my-input{
+    @apply border rounded-xl border-gray-500 dark:text-black
+}
+.input-error {
+    @apply text-sm text-red-500 dark:text-red-400
+}
+.my-button {
+    @apply px-4 py-2  bg-blue-600 rounded-md text-white outline-none focus:ring-4 shadow-lg transform active:scale-x-75 transition-transform text-center  mt-6
+}
+.delete-button {
+    @apply border p-2 font-medium rounded-md border-black bg-red-600
+}
+.edit-button {
+    @apply border p-2 font-medium rounded-md border-black bg-yellow-600
+}
