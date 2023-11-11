@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Roles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -27,10 +28,10 @@ class LoginController extends Controller
             );
         }
         $request->session()->regenerate();
-        if(Auth::user()->role==0){
-            return redirect()->intended('/');
+        if(Auth::user()->role==Roles::Candidate){
+            return redirect()->route('user.index');
         }
-        else if(Auth::user()->role==1){
+        else if(Auth::user()->role==Roles::Employer){
             return redirect()->route('company.profile');
 
         }

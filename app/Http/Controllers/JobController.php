@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Roles;
 use App\Models\Application;
 use App\Models\JobAd;
 use Illuminate\Http\Request;
@@ -51,20 +52,20 @@ class JobController extends Controller
             'location' => ['required', 'string'],
             'end_of_job_ad' => ['required']
         ]);
-        $attr['employer_id'] = $request->user()->recruiter->employer->id;
-        JobAd::create($attr);
+
+        JobAd::create([...$attr,'employer_id' => $request->user()->recruiter->employer->id] );
         return redirect()->route('company.profile')->with('success', 'Job has been successfully added');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(JobAd $job)
+    public function show( JobAd $job)
     {
 
         return inertia('Jobs/JobView',
             [
-                'job' => $job,
+                'job' => $job->with('employer:id,name')->first(),
                 'applications' => Application::with('user')->where('job_ad_id', $job->id)->get()
             ]);
     }

@@ -37,13 +37,13 @@ Route::middleware('auth')->group(function(){
 
     });
     Route::resource('notifications', \App\Http\Controllers\NotificationController::class)->only(['index', 'update']);
-
+    Route::resource('jobs', \App\Http\Controllers\JobController::class)->only(['show']);
     //Recruiter
     Route::middleware('role:1')->group(function (){
         Route::get('/company', [\App\Http\Controllers\RecruiterController::class, 'index'])->name('company.profile');
         Route::get('/company/{employer}/edit', [\App\Http\Controllers\EmployerController::class, 'edit'])->name('company.edit');
         Route::resource('jobs', \App\Http\Controllers\JobController::class)->only([
-            'create', 'store', 'show', 'destroy', 'edit', 'update'
+            'create', 'store', 'destroy', 'edit', 'update'
         ]);
         Route::post('/company/info', [\App\Http\Controllers\EmployerController::class, 'update'])->name('company.update');
         Route::get('/invite-to-interview/{userId}/{application}', [\App\Http\Controllers\ApplicationController::class, 'index'])->name('application.accept');

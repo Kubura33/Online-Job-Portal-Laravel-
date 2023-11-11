@@ -14,16 +14,15 @@
                     </div>
                     <div>
                         <div class="mt-10 w-52 h-36 border rounded-md">
-                            <img :src="user.employerImage" class=" w-full h-36 object-contain" >
+                            <img :src="user.employerImage" class=" w-full h-36 object-contain">
                         </div>
-
 
                         <span class="text-sm text-center">This picture will show on your job ads
                             <br>
 
                             <Link
                                 :href="route('company.edit', {employer: user.employer})"
-                            class="hover:cursor-pointer underline text-emerald-600" >Edit company profile</Link>
+                                class="hover:cursor-pointer underline text-emerald-600">Edit company profile</Link>
                         </span>
 
                     </div>
@@ -31,7 +30,8 @@
                 <!--                <Link class="text-teal-600 underline">Edit company profile</Link>-->
                 <div>
                     <h1 class="text-center font-medium text-2xl text-blue-700">Description</h1>
-                    <div class="border rounded-xl border-gray-500 bg-gray-200 dark:bg-gray-700 mt-6 p-10 whitespace-break-spaces">
+                    <div
+                        class="border rounded-xl border-gray-500 bg-gray-200 dark:bg-gray-700 mt-6 p-10 whitespace-break-spaces">
                         {{ user.employer.description }}
                     </div>
                 </div>
@@ -46,39 +46,45 @@
 
             <div class="grid grid-cols-1 gap-4  md:grid-cols-3">
                 <div v-for="job in jobs" :key="job.id"
-                     class="p-6 border rounded-xl bg-blue-100 text-center items-center">
+                     class="p-6 border rounded-xl bg-blue-100 text-center items-center dark:bg-blue-800">
                     <div><span class="text-2xl font-medium">{{ job.title }}</span></div>
-                    <div><span class="text-orange-500 font-medium"> {{ job.location }}</span></div>
-                    <div><span class="font-medium text-emerald-600">Posted: {{ formatDate(job.created_at) }}</span>
+                    <div><span class="text-orange-500 font-medium dark:text-orange-200"> {{ job.location }}</span></div>
+                    <div><span class="font-medium text-emerald-600 dark:text-white">Posted: {{ formatDate(job.created_at) }}</span>
                         <span class="font-bold text-lg">  || </span> <span
-                            class="font-medium text-red-600">End date: {{ job.end_of_job_ad }}</span></div>
-                    <div>Applied: 0</div>
+                            class="font-medium text-red-600 dark:text-gray-950">End date: {{ job.end_of_job_ad }}</span></div>
+                    <div>Applied: {{numberOfApplicants}}</div>
                     <div class="flex justify-between mt-4">
-                        <Link :href="route('jobs.show', {job: job.id})" class="border rounded-md border-stone-700 p-2 bg-purple-500 font-medium">View job</Link>
-                        <Link @click="danger" :href="route('jobs.destroy', {job: job.id})" method="delete" as="button" class="delete-button">Delete job</Link>
+                        <Link :href="route('jobs.show', {job: job.id})"
+                              class="border rounded-md border-stone-700 p-2 bg-purple-500 font-medium">View job
+                        </Link>
+                        <Link @click="danger" :href="route('jobs.destroy', {job: job.id})" method="delete" as="button"
+                              class="delete-button">Delete job
+                        </Link>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-
-
 </template>
 <script setup>
-import {Link, useForm, usePage} from "@inertiajs/vue3";
-import {computed, ref, defineProps} from "vue";
-import moment from 'moment'
+import {Link, usePage} from '@inertiajs/vue3';
+import {computed, defineProps} from 'vue';
+import moment from 'moment';
 
-const page = usePage()
-const user = computed(() => page.props.user)
+const page = usePage();
+const user = computed(() => page.props.user);
 const formatDate = (date) => {
     if (date) {
-        return moment(String(date)).format('YYYY-MM-DD')
+        return moment(String(date)).format('YYYY-MM-DD');
     }
-}
+};
+// eslint-disable-next-line no-unused-vars
 const props = defineProps({
-    jobs: Array
-})
-const danger = () => { confirm("Are you sure you want to delete this job?")}
+    jobs: Array,
+    numberOfApplicants : Number,
+});
+const danger = () => {
+    confirm('Are you sure you want to delete this job?');
+};
 </script>

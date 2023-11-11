@@ -2,18 +2,19 @@
     <div>
         <div class="flex flex-col gap-8">
             <div class="flex flex-col gap-4">
-                <span class="text-3xl font-medium">{{ job.title }}</span>
+                <h1 class="text-5xl font-medium text-center">{{ job.title }}</h1>
                 <span class="text-lg font-medium">Location : {{ job.location }}</span>
+                <span class="text-lg font-medium">Company : {{job.employer.name}}</span>
                 <span class="text-lg font-medium">Posted at : {{ date }}</span>
                 <span class="text-lg font-medium">Ends at : {{ job.end_of_job_ad }}</span>
             </div>
-            <div class="flex gap-8">
+            <div class="flex gap-8" v-if="user.role==1">
                 <Link :href="route('jobs.edit', {job: job.id})" class="edit-button w-20 text-center">Edit</Link>
                 <span class="delete-button w-20 text-center">Delete</span>
             </div>
         </div>
         <div class="w-full mt-20">
-            <div class="mb-10">
+            <div class="mb-10" v-if="user.role">
                 <h1 class="text-center text-2xl font-medium">Users that applied for this job
                     ({{ applications.length }})</h1>
                 <ul class="flex flex-col items-center justify-center p-6">
@@ -87,8 +88,10 @@
 <script setup>
 import {defineProps} from 'vue'
 import {useDateFormatting} from '../../Composables/useDateFormatting.js'
-import {Link} from "@inertiajs/vue3";
+import {Link, usePage} from "@inertiajs/vue3";
 
+const page = usePage();
+const user = page.props.user;
 const props = defineProps({
     job: Object,
     applications: Array,

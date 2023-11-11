@@ -16,7 +16,12 @@ class RecruiterController extends Controller
         return inertia(
             'Company/RecruiterProfile',
             [
-                'jobs' =>$request->user()->recruiter ? $request->user()->recruiter->employer->job : null
+                'jobs' =>$request->user()->recruiter ? $request->user()->recruiter->employer->job : null,
+                'numberOfApplicants' => optional($request->user()->recruiter->employer->job)
+                    ->flatMap(function ($job) {
+                        return $job->applications;
+                    })
+                    ->count()
 
             ]
         );

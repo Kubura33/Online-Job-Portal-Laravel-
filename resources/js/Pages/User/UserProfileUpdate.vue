@@ -79,14 +79,7 @@ const handleFileChange = (event) => {
         descriptionForm.profile_image = selectedFile
     }
 }
-const upload = () => {
-    form.post(route('user.upload'), {
-        onSuccess: () => {
-            form.reset("image")
-            location.reload()
-        }
-    })
-}
+
 const addCvToForm = (event) => {
     const CV = event.target.files[0]
     if (CV) {

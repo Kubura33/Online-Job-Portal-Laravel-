@@ -49,7 +49,7 @@
         <div class="flex items-center justify-center w-full mt-10 flex-col">
             <h1 class="font-medium text-3xl mb-4">Jobs you have applied for ({{ applications.length }})</h1>
             <div class=" w-3/4">
-                <div v-for="application in applications" class="border rounded-lg border-gray-200 p-4">
+                <div v-for="application in applications" :key="application.id" class="border rounded-lg border-gray-200 p-4">
                     <div class="flex justify-between">
                         <div class="flex flex-col">
                             <span class="font-medium text-3xl">{{ application.job.title }}</span>
@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <p class="mt-4 text-center break-all ">{{ formatText(application.job.description) }}</p>
-                    <h6 class="mt-4 underline hover:cursor-pointer">View job</h6>
+                    <Link :href="route('jobs.show', {job: application.job})" class="mt-4 underline hover:cursor-pointer">View job</Link>
                 </div>
             </div>
         </div>
@@ -89,9 +89,8 @@
 </template>
 <script setup>
 import {ref, defineProps, computed,} from "vue";
-import {useForm, Link} from "@inertiajs/vue3";
+import { Link} from "@inertiajs/vue3";
 import {useDateFormatting} from '../../Composables/useDateFormatting.js'
-import {usePDF} from "@tato30/vue-pdf";
 
 const props = defineProps({
     applications: Array,

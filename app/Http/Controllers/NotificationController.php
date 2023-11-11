@@ -11,7 +11,7 @@ class NotificationController extends Controller
             'Notifications/Index'
             ,
             [
-                'notifications' => $request->user()->notifications()->orderBy('created_at', 'desc')->get()
+                'notifications' => $request->user()->notifications()->latest()
             ]
         );
     }
